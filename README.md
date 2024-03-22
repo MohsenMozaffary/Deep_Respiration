@@ -1,7 +1,7 @@
 # Deep_Respiration
 This repository contains implementations of four different deep learning-based algorithms for remote respiration rate estimation from thermal camera recordings: PhsyNet, DeepPhys, StressNet, and PhysLSTM. These algorithms leverage the power of deep learning techniques implemented using PyTorch.
 
-Algorithms Implemented
+# Algorithms Implemented
 PhsyNet: A deep learning-based algorithm for respiration rate estimation from thermal imagery.
 DeepPhys: Another deep learning approach tailored for remote respiration rate estimation using thermal camera recordings.
 StressNet: A method designed specifically for stress detection from physiological signals including respiration rate obtained from thermal imaging.
