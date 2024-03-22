@@ -7,8 +7,8 @@ DeepPhys: Another deep learning approach tailored for remote respiration rate es
 StressNet: A method designed specifically for stress detection from physiological signals including respiration rate obtained from thermal imaging.
 PhysLSTM: A novel deep learning-based algorithm developed as part of this project, utilizing Long Short-Term Memory (LSTM) networks for respiration rate estimation from thermal camera recordings.
 # Requirements
-PyTorch__
-NumPy__
+PyTorch <br />
+NumPy <br />
 OpenCV (optional, for preprocessing)
 
 
