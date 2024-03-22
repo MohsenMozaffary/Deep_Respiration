@@ -8,7 +8,7 @@ StressNet: A method designed specifically for stress detection from physiologica
 PhysLSTM: A novel deep learning-based algorithm developed as part of this project, utilizing Long Short-Term Memory (LSTM) networks for respiration rate estimation from thermal camera recordings.
 # Requirements
 PyTorch
-NumPy
+NumPy /n
 OpenCV (optional, for preprocessing)
 
 
