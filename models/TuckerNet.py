@@ -1,26 +1,31 @@
-#TuckerNet for respiratory rate estimation
 import torch
 import torch.nn as nn
 import torch.nn.init as init
+import tensorly as tl
+from tensorly.decomposition import Tucker
 
 class TuckerNet(nn.Module):
 
     def __init__(self, in_channels=1, n_filters1=16, n_filters2=32, dropout_rate1=0.15,
-                 dropout_rate2=0.15, pool_size=(2, 2), nb_dense=128):
+                 dropout_rate2=0.15, pool_size=(2, 2), tucker_rank = 2):
         """Definition of TuckerNet.
         Args:
           in_channels: number of input video frame channels. Default: 1
+          n_filters1: number of kernels for first group of conv2d. Default: 16
+          n_filters1: number of kernels for second group of conv2d. Default: 32
+          tucker_rank: rank of tucker decomposition. Default: 2
         Returns:
           TuckerNet model.
         """
         super(TuckerNet, self).__init__()
+        tl.set_backend('pytorch')
+        self.tucker = Tucker(rank=[tucker_rank, tucker_rank, tucker_rank], init='random')
         self.in_channels = in_channels
         self.dropout_rate1 = dropout_rate1
         self.dropout_rate2 = dropout_rate2
         self.pool_size = pool_size
         self.n_filters1 = n_filters1
         self.n_filters2 = n_filters2
-        self.nb_dense = nb_dense
         # Spatial conv2ds
         self.conv1 = nn.Conv2d(
                                 self.in_channels, 
@@ -80,9 +85,14 @@ class TuckerNet(nn.Module):
     # inputs shape: batch, time, channels, width, height
     # t1, and t2 are time loading vectors from Tucker decomposition
     # t1, and t2 shape: time
-    def forward(self, inputs, t1, t2):
-        diff_input = inputs
+    def forward(self, inputs):
+        diff_input = inputs[0]
+        _, factors = self.tucker.fit_transform(inputs[1])
+        t1 = factors[0][:,0]
+        t2 = factors[0][:,1]
 
+        t1 = torch.unsqueeze(t1, 0)
+        t2 = torch.unsqueeze(t2, 0)
         t1 = torch.unsqueeze(t1, -1)
         t2 = torch.unsqueeze(t2, -1)
 
